@@ -97,7 +97,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                             size: 60,
                                                           )
                                                         : Image.network(
-                                                            map['profile']
+                                                  map['profile'].toString() == ''
+                                                      ? map['profile']
+                                                      :map['profile']
                                                                 .toString(),
                                                             fit: BoxFit.cover,
                                                           )
@@ -151,13 +153,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 2),
                                   ReuseRow(
                                     title: 'User Name',
-                                    value: map['username'],
+                                    value: map['username'].toString() == ''
+                                        ? 'username'
+                                        :map['username'],
                                     iconData: Icons.person_outline,
                                   ),
                                   const SizedBox(height: 20),
                                   ReuseRow(
                                     title: 'Email',
-                                    value: map['email'],
+                                    value: map['email'].toString() == ''
+                                        ? 'abc@gmail.com'
+                                        :map['email'],
                                     iconData: Icons.email_outlined,
                                   ),
                                   // SizedBox(height: 20),
@@ -177,15 +183,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   const SizedBox(height: 20),
                                   RoundButton(
                                     btntxt: 'Logout',
-                                    ontap: () async {
-                                      final auth = FirebaseAuth.instance;
-                                      await auth.signOut().then((value) =>
-                                          PersistentNavBarNavigator.pushNewScreen(
-                                              context,
-                                              screen: const LoginScreen(),
-                                              withNavBar: false)
-                                      );
-                                    },
+                                    ontap: _onWillPop,
                                   )
                                 ],
                               );
@@ -204,6 +202,48 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ),
           ],
         ));
+  }
+  Future<bool> _onWillPop() async {
+    final resp = await showDialog<bool>(
+        context: context,
+        builder: (_) {
+          return AlertDialog(
+            content: const Text(
+                "Are you sure you want to LogOut."),
+            title: const Text("Warning!"),
+            actions: <Widget>[
+              TextButton(
+                child: const Text("Yes"),
+                onPressed: () async {
+                  final auth = FirebaseAuth.instance;
+                  signOutFromGoogle();
+                  await auth.signOut().then((value)  =>
+                      PersistentNavBarNavigator.pushNewScreen(
+                          context,
+                          screen: const LoginScreen(),
+                          withNavBar: false)
+                  );
+                },
+              ),
+              TextButton(
+                child: const Text("No"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          );
+        });
+    return resp ?? false;
+  }
+
+  Future<bool> signOutFromGoogle() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      return true;
+    } on Exception catch (_) {
+      return false;
+    }
   }
 }
 

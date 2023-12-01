@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_media/ViewModel/signup/signup_controller.dart';
 
@@ -136,6 +137,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                       emailController.text.toString(),
                                       passwordController.text.toString());
                                 }
+                              },
+                            ),
+                            SizedBox(height: height * .04),
+                            ElevatedButton(
+                              child: const Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  FaIcon(FontAwesomeIcons.googlePlusG,color: Colors.red),
+                                  SizedBox(width: 10),
+                                  Text('Sign Up with Google')
+                                ],
+                              ),
+                              onPressed: () {
+                                provider.signInWithGoogle(context);
                               },
                             ),
                             SizedBox(height: height * .04),

@@ -55,7 +55,7 @@ dependencies:
   html_unescape: ^2.0.0
   auto_size_text: ^3.0.0
   change_app_package_name:
-
+  google_sign_in: ^6.1.6
 
 dev_dependencies:
   flutter_test:

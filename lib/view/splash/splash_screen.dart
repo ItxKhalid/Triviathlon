@@ -25,22 +25,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
+    return   Scaffold(
       backgroundColor: Colors.indigo,
       body: SafeArea(
           child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
-        children: const [
-          FaIcon(
-            FontAwesomeIcons.solidLightbulb,
-            color: Colors.white,
-            size: 150,
-          ),
-          SizedBox(height: 40),
-          Center(
+        children: [
+          Image.asset('assets/images/appicon.png',width: 150,height: 150),
+          const SizedBox(height: 40),
+          const Center(
               child: Text(
-            'Welcome to\n Quiz App',
+            'Welcome to\n Triviathlon',
             textAlign: TextAlign.center,
             style: TextStyle(
                 fontSize: 37,
